@@ -24,7 +24,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: "16"
+          node-version: "18"
       - name: Setup Pages
         uses: actions/configure-pages@v3
         with:
@@ -49,27 +49,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
-
-  mails-started:
-    if: always()
-    uses: tech1-io/tech1-reusable-ops/.github/workflows/mails-v2.yml@main
-    secrets: inherit
-    with:
-      previous_job_status: started
-      to: ${{ vars.EMAILS_ADMINS }}, ${{ vars.EMAILS_TEAM_WEBSITES }}
-
-  mails-built:
-    needs: [build]
-    uses: tech1-io/tech1-reusable-ops/.github/workflows/mails-v2.yml@main
-    secrets: inherit
-    with:
-      previous_job_status: built
-      to: ${{ vars.EMAILS_ADMINS }}, ${{ vars.EMAILS_TEAM_WEBSITES }}
-
-  mails-redeployed:
-    needs: [redeploy]
-    uses: tech1-io/tech1-reusable-ops/.github/workflows/mails-v2.yml@main
-    secrets: inherit
-    with:
-      previous_job_status: redeployed
-      to: ${{ vars.EMAILS_ADMINS }}, ${{ vars.EMAILS_TEAM_WEBSITES }}
